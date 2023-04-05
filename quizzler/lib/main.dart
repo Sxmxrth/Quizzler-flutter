@@ -32,6 +32,28 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
 
+  void checkAnswer(bool answer) {
+    setState(() {
+      QuizBrain.getAnswerText() == answer
+          ? scoreKeeper.add(Icon(
+              Icons.check,
+              color: Colors.green,
+            ))
+          : scoreKeeper.add(Icon(
+              Icons.close,
+              color: Colors.red,
+            ));
+      QuizBrain.nextQuestion(context);
+      if (QuizBrain.index == 0) {
+        scoreKeeper = [];
+      }
+    });
+  }
+
+  void setAnswerBar() {
+    scoreKeeper = [];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,19 +80,7 @@ class _QuizPageState extends State<QuizPage> {
             color: Colors.green,
             child: TextButton(
               onPressed: () {
-                setState(() {
-                  QuizBrain.getAnswerText() == true
-                      ? scoreKeeper.add(Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ))
-                      : scoreKeeper.add(Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ));
-                  QuizBrain.nextQuestion();
-                });
-                print("User picked True");
+                checkAnswer(true);
               },
               child: Text(
                 "True",
@@ -89,18 +99,7 @@ class _QuizPageState extends State<QuizPage> {
             color: Colors.red,
             child: TextButton(
               onPressed: () {
-                setState(() {
-                  QuizBrain.getAnswerText() == false
-                      ? scoreKeeper.add(Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ))
-                      : scoreKeeper.add(Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ));
-                  QuizBrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
               child: Text(
                 "False",
