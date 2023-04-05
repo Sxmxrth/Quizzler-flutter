@@ -30,7 +30,6 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int index = 0;
   List<Widget> scoreKeeper = [];
 
   @override
@@ -45,7 +44,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                QuizBrain.questionAndAnswer[index].questionText,
+                QuizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
@@ -60,7 +59,7 @@ class _QuizPageState extends State<QuizPage> {
             child: TextButton(
               onPressed: () {
                 setState(() {
-                  QuizBrain.questionAndAnswer[index].questionAnswer == true
+                  QuizBrain.getAnswerText() == true
                       ? scoreKeeper.add(Icon(
                           Icons.check,
                           color: Colors.green,
@@ -69,7 +68,7 @@ class _QuizPageState extends State<QuizPage> {
                           Icons.close,
                           color: Colors.red,
                         ));
-                  index++;
+                  QuizBrain.nextQuestion();
                 });
                 print("User picked True");
               },
@@ -91,7 +90,7 @@ class _QuizPageState extends State<QuizPage> {
             child: TextButton(
               onPressed: () {
                 setState(() {
-                  QuizBrain.questionAndAnswer[index].questionAnswer == false
+                  QuizBrain.getAnswerText() == false
                       ? scoreKeeper.add(Icon(
                           Icons.check,
                           color: Colors.green,
@@ -100,7 +99,7 @@ class _QuizPageState extends State<QuizPage> {
                           Icons.close,
                           color: Colors.red,
                         ));
-                  index++;
+                  QuizBrain.nextQuestion();
                 });
               },
               child: Text(
