@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'quizbrain.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,28 +30,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Widget> scoreKeeper = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-  ];
+  int index = 0;
+  List<Widget> scoreKeeper = [];
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +45,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                "This is where the question will go",
+                QuizBrain.questionAndAnswer[index].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
@@ -79,10 +60,16 @@ class _QuizPageState extends State<QuizPage> {
             child: TextButton(
               onPressed: () {
                 setState(() {
-                  scoreKeeper.add(Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ));
+                  QuizBrain.questionAndAnswer[index].questionAnswer == true
+                      ? scoreKeeper.add(Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ))
+                      : scoreKeeper.add(Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ));
+                  index++;
                 });
                 print("User picked True");
               },
@@ -104,10 +91,16 @@ class _QuizPageState extends State<QuizPage> {
             child: TextButton(
               onPressed: () {
                 setState(() {
-                  scoreKeeper.add(Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ));
+                  QuizBrain.questionAndAnswer[index].questionAnswer == false
+                      ? scoreKeeper.add(Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ))
+                      : scoreKeeper.add(Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ));
+                  index++;
                 });
               },
               child: Text(
